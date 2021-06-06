@@ -27,7 +27,7 @@ router.post("/update", async (req, res)=>{
             var items = {  
                 name : req.body.data.newname,
                 url : fileStr
-            }  
+            } 
         } else {
             const uploadResponse = await cloudinary.uploader.upload(fileStr, { 
                 "folder" : 'Michael Images',
