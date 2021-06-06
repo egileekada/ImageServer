@@ -32,9 +32,36 @@
         margin-top: 20px;
     }
 
+    .get{
+        background-color: #EBF1F9;
+        border: 1px solid #62AEFB;
+        width: 100%;
+        height: auto;
+        display: flex; 
+        flex-direction: column;
+        border-radius: 3px;
+        margin-top: 20px;
+    }
+
     .post_indicator{
         background-color: #5ACC90;
-        height: 30px;
+        height: 40px;
+        font-size:small;  
+        justify-content: center;
+        align-items: center; 
+        display: flex;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        border-radius: 3px;
+        margin: 4px;
+        color: white; 
+        width: 70px;
+        cursor: pointer;
+    }
+
+    .get_indicator{
+        background-color: #62AEFB;
+        height: 40px;
         font-size:small;  
         justify-content: center;
         align-items: center; 
@@ -130,7 +157,16 @@
     <div class="center" >
         <h1>Image Uploader Documentation</h1>
     </div>
-    <div style="margin-top: 70px;" > 
+    <div style="margin-top: 70px;" >  
+        <div class="get">
+            <div class="title" >
+                <div class="get_indicator" >
+                    <p>GET</p>
+                </div> 
+                <input  class="url" type="text" value='https://image-uploder.herokuapp.com/api/view' id="get" readonly>
+                <p style="cursor: pointer; margin-right: 20px;" id="toolget" class="tooltip copytext" onclick="copyfile('get', 'toolget')" onmouseout="outFunc('toolget')">Copy</p>
+            </div>  
+        </div>
         <div class="post">
             <div class="title" >
                 <div onclick="myFunction('viewDiv')"  class="post_indicator" >
