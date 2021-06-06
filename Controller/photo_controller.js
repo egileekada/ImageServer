@@ -12,7 +12,7 @@ async function findImageByName(client, name, res){
 
     await client.connect(); 
     const cursor = client.db("Photo_Storage").collection("data").find({
-        name: { $regex: name }
+        name: {  sku: { $regex: name } }
     });
 
     const result = await cursor.toArray(); 
