@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();  
 const upload = require("../Routers/upload")
 const update = require("../Routers/update")
+const names = require("../Routers/listname")
 const remove = require("../Routers/delete") 
 const {MongoClient} = require("mongodb"); 
 
@@ -19,7 +20,10 @@ async function findImageByName(client, name, res){
     res.json(result)
 }
 
-router.use("/image", upload, remove, update);   
+router.use("/image", upload, remove, update);  
+
+
+// router.use("/", names); 
 
 router.post("/view_image", async (req, res)=>{ 
     try {   
@@ -33,7 +37,7 @@ router.post("/view_image", async (req, res)=>{
     } 
 }); 
 
-router.get("/view", async (req, res)=>{ 
+router.get("/search", async (req, res)=>{ 
     try {   
         let name = req.query.name 
         await client.connect(); 
@@ -42,8 +46,21 @@ router.get("/view", async (req, res)=>{
         });
 
         const result = await cursor.toArray(); 
-        res.json(result)
-        console.log(result)
+        res.json(result)         
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Something went wrong' });
+    } 
+}); 
+
+router.get("/", async (req, res)=>{ 
+    try {    
+        
+        await client.connect(); 
+        const cursor = client.db("Photo_Storage").collection("data").find();
+
+        const results = await cursor.toArray(); 
+        res.json(results)  
         
     } catch (err) {
         console.error(err);

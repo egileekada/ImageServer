@@ -31,7 +31,7 @@ application.get("/", (req, res)=>{
 application.use("/api", PhotoController)
 
 const port = process.env.PORT || 8000
-
+ 
 application.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`)
 })
