@@ -14,4 +14,4 @@ const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, use
         connect: client  
     }
     
-    // main() 
+    main() 

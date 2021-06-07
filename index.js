@@ -2,8 +2,7 @@ const express = require('express')
 const application = express()
 const path = require("path")
 const expressHandlerbars = require("express-handlebars")
-const bodyparser = require("body-parser")
-const database = require('./Database/database')
+const bodyparser = require("body-parser") 
 const PhotoController = require("./Controller/photo_controller") 
 var cors = require('cors');
  
@@ -14,8 +13,6 @@ application.use(cors());
 application.use(bodyparser.urlencoded({
   extended : true
 }));
-
-// database.db
 
 application.set("views", path.join(__dirname, "/views/"))
 
