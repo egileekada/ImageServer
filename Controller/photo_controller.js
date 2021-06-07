@@ -53,7 +53,7 @@ router.get("/search", async (req, res)=>{
     } 
 }); 
 
-router.get("/", async (req, res)=>{ 
+router.get("/viewall", async (req, res)=>{ 
     try {    
         
         await client.connect(); 
