@@ -1,17 +1,14 @@
 const express = require("express"); 
 const router = express.Router();  
 const upload = require("../Routers/upload")
-const update = require("../Routers/update")
-const names = require("../Routers/listname")
-const remove = require("../Routers/delete") 
-const {MongoClient} = require("mongodb"); 
+const update = require("../Routers/update") 
+const remove = require("../Routers/delete")  
+const database = require('../Database/database') 
 
-require('dotenv').config();
-const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true}, { connectTimeoutMS: 300 }, { keepAlive: 1});
+const client = database.connect 
 
 async function findImageByName(client, name, res){ 
-
-    await client.connect(); 
+ 
     const cursor = client.db("Photo_Storage").collection("data").find({
         name: { $regex: name, $options:'i' }
     });
@@ -20,14 +17,10 @@ async function findImageByName(client, name, res){
     res.json(result)
 }
 
-router.use("/image", upload, remove, update);  
-
-
-// router.use("/", names); 
+router.use("/image", upload, remove, update);   
 
 router.post("/view_image", async (req, res)=>{ 
-    try {   
-
+    try {    
         let name = req.body.data
         await findImageByName(client, name, res);  
         
@@ -54,9 +47,7 @@ router.get("/search", async (req, res)=>{
 }); 
 
 router.get("/viewall", async (req, res)=>{ 
-    try {    
-        
-        await client.connect(); 
+    try {      
         const cursor = client.db("Photo_Storage").collection("data").find();
 
         const results = await cursor.toArray(); 
@@ -66,6 +57,6 @@ router.get("/viewall", async (req, res)=>{
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
     } 
-}); 
+});  
 
 module.exports = router;

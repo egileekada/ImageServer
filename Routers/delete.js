@@ -1,14 +1,12 @@
 const express = require("express"); 
-const router = express.Router();  
-const {MongoClient} = require("mongodb"); 
+const router = express.Router();   
+const database = require('../Database/database') 
 
-require('dotenv').config();
-const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true}, { connectTimeoutMS: 300 }, { keepAlive: 1});
-  
+
+const client = database.connect 
+
 router.post("/delete", async (req, res)=>{ 
-    try {     
-
-        await client.connect(); 
+    try {      
         await client.db("Photo_Storage").collection("data").deleteOne(
             { name: req.body.data.name }
         );

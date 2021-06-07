@@ -1,14 +1,12 @@
 const { cloudinary } = require('../utils/cloudinary'); 
 const express = require("express"); 
-const router = express.Router(); 
-const mongoose = require("mongoose")
-const {MongoClient} = require("mongodb"); 
+const router = express.Router();  
+const database = require('../Database/database') 
 
-require('dotenv').config();
-const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true}, { connectTimeoutMS: 300 }, { keepAlive: 1});
 
-async function AddImageData(client, newData){  
-    await client.connect();
+const client = database.connect 
+
+async function AddImageData(client, newData){    
     await client.db("Photo_Storage").collection("data", {
         validator: {
             $and: [
@@ -28,7 +26,7 @@ async function AddImageData(client, newData){
         .createIndex({name: 1}, {unique: true});
 
     console.log("Upload Successful") 
-} 
+}  
  
 router.post("/upload", async (req, res)=>{ 
     try {  

@@ -1,15 +1,13 @@
 const { cloudinary } = require('../utils/cloudinary'); 
 const express = require("express"); 
 const router = express.Router();  
-const {MongoClient} = require("mongodb");  
+const database = require('../Database/database') 
 
-require('dotenv').config();
 
-const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true}, { connectTimeoutMS: 300 }, { keepAlive: 1}); 
+const client = database.connect 
 
 async function upadateImageByName(client, imageName, updateName){ 
-
-    await client.connect(); 
+ 
     const cursor =  await client.db("Photo_Storage").collection("data").updateOne(
         { name: imageName },
         { $set:updateName }
