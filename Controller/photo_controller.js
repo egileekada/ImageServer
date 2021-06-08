@@ -9,7 +9,6 @@ const client = database.connect
 
 async function findImageByName(client, name, res){ 
  
-    await client.connect();
     const cursor = await client.db("Photo_Storage").collection("data").find({
         name: { $regex: name, $options:'i' }
     });
@@ -29,14 +28,13 @@ router.post("/view_image", async (req, res)=>{
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
     } finally {
-        await client.close();
+        client.close();
     }
 }); 
 
 router.get("/search", async (req, res)=>{ 
     try {   
-        let name = req.query.name 
-        await client.connect(); 
+        let name = req.query.name  
         const cursor = client.db("Photo_Storage").collection("data").find({
             name: { $regex: name, $options:'i' }
         });
@@ -46,9 +44,10 @@ router.get("/search", async (req, res)=>{
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
-    } finally {
-        await client.close();
-    }
+    } 
+    // finally {
+    //     client.close();
+    // }
 }); 
 
 router.get("/viewall", async (req, res)=>{ 
@@ -61,9 +60,10 @@ router.get("/viewall", async (req, res)=>{
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
-    } finally {
-        client.close();
-    }
+    } 
+    // finally {
+    //     client.close();
+    // }
 });  
 
 module.exports = router;
