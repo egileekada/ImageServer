@@ -7,6 +7,7 @@ const database = require('../Database/database')
 const client = database.connect 
 
 async function AddImageData(client, newData){    
+    await client.connect();
     await client.db("Photo_Storage").collection("data", {
         validator: {
             $and: [
@@ -46,7 +47,9 @@ router.post("/upload", async (req, res)=>{
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
-    } 
+    } finally {
+        await client.close();
+    }
 }); 
 
 module.exports = router;

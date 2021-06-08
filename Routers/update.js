@@ -8,6 +8,7 @@ const client = database.connect
 
 async function upadateImageByName(client, imageName, updateName){ 
  
+    await client.connect();
     const cursor =  await client.db("Photo_Storage").collection("data").updateOne(
         { name: imageName },
         { $set:updateName }
@@ -43,7 +44,9 @@ router.post("/update", async (req, res)=>{
     } catch (err) {
         console.error(err);
         res.status(500).json({ err: 'Something went wrong' });
-    } 
+    } finally {
+        await client.close();
+    }
 }) 
 
 module.exports = router;
