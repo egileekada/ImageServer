@@ -6,26 +6,7 @@ const database = require('../Database/database')
 
 const client = database.connect 
 
-async function AddImageData(client, newData){    
-    // client.connect( async function(err) {  
-    //     if(err) return err
-    //     const db = client.db("Photo_Storage");
-    //     db.collection("data", {
-    //             validator: {
-    //                 $and: [
-    //                     {
-    //                         "name" : {$type: "string", $exists: true}
-    //                     },
-    //                     {
-    //                         "url" : {$type: "string", $exists: true}
-    //                     },
-    //                 ]
-    //             }
-    //         }).insertOne(newData);
-    //         db.collection("data")
-    //         .createIndex({name: 1}, {unique: true})
-    //             client.close();
-    // })
+async function AddImageData(client, newData){  
     await client.db("Photo_Storage").collection("data", {
         validator: {
             $and: [

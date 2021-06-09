@@ -6,12 +6,7 @@ const database = require('../Database/database')
 const client = database.connect 
 
 router.post("/delete", async (req, res)=>{ 
-    try {       
-        // client.connect( async function(err) {  
-        //     if(err) return err
-        //     const db = client.db("Photo_Storage");
-        //     db.collection("data").deleteOne({ name: req.body.data.name })
-        // })
+    try {        
         await client.db("Photo_Storage").collection("data").deleteOne(
             { name: req.body.data.name }
         );

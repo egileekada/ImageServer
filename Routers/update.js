@@ -6,12 +6,7 @@ const database = require('../Database/database')
 
 const client = database.connect 
 
-async function upadateImageByName(client, imageName, updateName){ 
-    // client.connect( async function(err) {  
-    //     if(err) return err
-    //     const db = client.db("Photo_Storage");
-    //     db.collection("data").updateOne( { name: imageName }, { $set:updateName } ) 
-    // })
+async function upadateImageByName(client, imageName, updateName){  
     await client.db("Photo_Storage").collection("data").updateOne(
         { name: imageName },
         { $set:updateName }
