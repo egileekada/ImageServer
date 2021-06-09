@@ -10,21 +10,21 @@ const client = database.connect
 
 async function findImageByName(client, name, res){ 
 
-    client.connect( async function(err) {  
-        if(err) return err
-        const db = client.db("Photo_Storage");
-        db.collection("data").find({ name: { $regex: name, $options:'i' } }).toArray(function(err, docs) {
-            assert.equal(err, null); 
-            res.json(docs)   
-          }); 
-    })
+    // client.connect( async function(err) {  
+    //     if(err) return err
+    //     const db = client.db("Photo_Storage");
+    //     db.collection("data").find({ name: { $regex: name, $options:'i' } }).toArray(function(err, docs) {
+    //         assert.equal(err, null); 
+    //         res.json(docs)   
+    //       }); 
+    // })
  
-    // const cursor = await client.db("Photo_Storage").collection("data").find({
-    //     name: { $regex: name, $options:'i' }
-    // });
+    const cursor = await client.db("Photo_Storage").collection("data").find({
+        name: { $regex: name, $options:'i' }
+    });
 
-    // const result = await cursor.toArray(); 
-    // res.json(result)
+    const result = await cursor.toArray(); 
+    res.json(result)
 }
 
 router.use("/image", upload, remove, update);   
@@ -45,48 +45,49 @@ router.post("/view_image", async (req, res) => {
 
 router.get("/search", async (req, res)=>{ 
 
-    let name = req.query.name 
-    client.connect( async function(err) {  
-        if(err) return err
-        const db = client.db("Photo_Storage");
-        db.collection("data").find({ name: { $regex: name, $options:'i' } }).toArray(function(err, docs) {
-            assert.equal(err, null); 
-            res.json(docs)   
-          }); 
-    })
-    // try {   
-    //     let name = req.query.name  
-    //     const cursor = client.db("Photo_Storage").collection("data").find({
-    //         name: { $regex: name, $options:'i' }
-    //     });
+    // let name = req.query.name 
+    // client.connect( async function(err) {  
+    //     if(err) return err
+    //     const db = client.db("Photo_Storage");
+    //     db.collection("data").find({ name: { $regex: name, $options:'i' } }).toArray(function(err, docs) {
+    //         assert.equal(err, null); 
+    //         res.json(docs)   
+    //       }); 
+    // })
+    try {   
+        let name = req.query.name  
+        const cursor = client.db("Photo_Storage").collection("data").find({
+            name: { $regex: name, $options:'i' }
+        });
 
-    //     const result = await cursor.toArray(); 
-    //     res.json(result)         
-    // } catch (err) {
-    //     console.error(err);
-    //     res.status(500).json({ err: 'Something went wrong' });
-    // }  
+        const result = await cursor.toArray(); 
+        res.json(result)         
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Something went wrong' });
+    }  
 }); 
 
 router.get("/viewall",async (req, res)=>{   
-    client.connect( async function(err) {  
-        if(err) return err
-        const db = client.db("Photo_Storage");
-        db.collection("data").find().toArray(function(err, docs) {
-            assert.equal(err, null); 
-            res.json(docs)   
-          }); 
-    })
-    // try {      
-    //     const cursor = client.db("Photo_Storage").collection("data").find();
+    // client.connect( async function(err) {  
+    //     if(err) return err
+    //     const db = client.db("Photo_Storage");
+    //     db.collection("data").find().toArray(function(err, docs) {
+    //         assert.equal(err, null); 
+    //         res.json(docs)   
+    //       }); 
 
-    //     const results = await cursor.toArray(); 
-    //     res.json(results)   
+    // }) 
+    try {      
+        const cursor = client.db("Photo_Storage").collection("data").find();
+
+        const results = await cursor.toArray(); 
+        res.json(results)   
         
-    // } catch (err) {
-    //     console.error(err);
-    //     res.status(500).json({ err: 'Something went wrong' });
-    // } 
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ err: 'Something went wrong' });
+    } 
     // finally {
     //     client.close();
     // }
