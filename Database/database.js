@@ -1,7 +1,7 @@
 const {MongoClient} = require("mongodb");  
 
 require('dotenv').config();
-const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true}, { connectTimeoutMS: 300 }, { keepAlive: 1});
+const client = new MongoClient(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopology: true, connectTimeoutMS: 5000, socketTimeoutMS: 5000} );
 
     async function main() { 
         try {
