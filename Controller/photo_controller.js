@@ -4,9 +4,12 @@ const upload = require("../Routers/upload")
 const update = require("../Routers/update") 
 const remove = require("../Routers/delete")  
 const database = require('../Database/database')  
+const index = require('../index')
 const assert = require('assert');
 
-const client = database.connect  
+// const client = database.connect  
+
+const client = index.connect
 
 async function findImageByName(client, name, res){  
     const cursor = await client.db("Photo_Storage").collection("data").find({
@@ -46,16 +49,22 @@ router.get("/search", async (req, res)=>{
 }); 
 
 router.get("/viewall",async (req, res)=>{    
-    try {      
-        const cursor = client.db("Photo_Storage").collection("data").find();
 
-        const results = await cursor.toArray(); 
-        res.json(results)   
+    client.db("Photo_Storage").collection("data").find().toArray(function(err, docs) {
+        // Print the documents returned 
+        res.json(docs)   
+    });
+
+    // try {      
+    //     const cursor = client.db("Photo_Storage").collection("data").find();
+
+    //     const results = await cursor.toArray(); 
+    //     res.json(results)   
         
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ err: 'Something went wrong' });
-    }  
+    // } catch (err) {
+    //     console.error(err);
+    //     res.status(500).json({ err: 'Something went wrong' });
+    // }  
 });  
 
 module.exports = router;
