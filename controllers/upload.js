@@ -9,11 +9,7 @@ router.post("/upload", async (req, res)=>{
         const uploadResponse = await cloudinary.uploader.upload(fileStr, { 
             "folder" : 'Michael Images',
             upload_preset: 'o8imcxn2' 
-        });   
- 
-        // let store = new data();
-        // store.name = req.body.data.name;
-        // store.url = uploadResponse.secure_url
+        });    
 
         var obj = {
             name:req.body.data.name,

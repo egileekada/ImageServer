@@ -7,10 +7,7 @@ async function upadateImageByName(imageName, updateName){
     await data.updateOne(
         { name: imageName },
         { $set:updateName }
-    );
-     
-    // console.log("File found "+cursor.matchedCount);
-    // console.log("File have been updated "+cursor.modifiedCount);
+    ); 
 }
 
 
