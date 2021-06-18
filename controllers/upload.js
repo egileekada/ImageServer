@@ -35,12 +35,29 @@ router.post("/upload", async (req, res)=>{
             upload_preset: 'o8imcxn2' 
         });  
 
-        var items = {
-            name : req.body.data.name,
-            url : uploadResponse.secure_url
-        } 
-        
-        await AddImageData(items);  
+        // const { item_name, item_description, item_category, reason } = req.body; //gets products data
+        // if( item_name && item_description && item_category && reason ) {
+        //     const newItem = new data({
+        //         name,
+        //         url, 
+        //     });
+        //     const itemInfo = await newItem.save();
+        //     itemInfo.success = true;
+        //     res.status(201).json(itemInfo);
+        // } else {
+        //     res.status(400).json({
+        //         success: false,
+        //         message: "new item could not be suggested"
+        //     });
+        // }
+        const name = req.body.data.name;
+        const url = uploadResponse.secure_url
+        var items = new data({
+            name,
+            url
+        });
+        await items.save(); 
+
         res.json({ msg: 'yaya' }); 
     } catch (err) {
         console.error(err);
