@@ -29,15 +29,26 @@ async function AddImageData(client, newData){
  
 router.post("/upload", async (req, res)=>{ 
     try {  
-        const fileStr = req.body.data.url; 
-        const uploadResponse = await cloudinary.uploader.upload(fileStr, { 
+        const {name,url } = req.body.data
+        // const fileStr = req.body.data.url; 
+        const uploadResponse = await cloudinary.uploader.upload(url, { 
             "folder" : 'Michael Images',
             upload_preset: 'o8imcxn2' 
         });   
 
-        data.name = req.body.data.name 
-        data.url = uploadResponse.secure_url 
-        await data.save();  
+        const newurl = uploadResponse.secure_url
+
+        const newItem = new data({
+            name, 
+            newurl
+        });
+        const itemInfo = await newItem.save();
+        itemInfo.success = true;
+        res.status(201).json(itemInfo);
+
+        // data.name = req.body.data.name 
+        // data. = uploadResponse. 
+        // await data.save();  
 
         res.json({ msg: 'yaya' }); 
     } catch (err) {
