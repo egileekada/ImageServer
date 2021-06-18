@@ -35,7 +35,7 @@ router.post("/upload", async (req, res)=>{
             upload_preset: 'o8imcxn2' 
         });   
  
-        var item =new User({
+        var item =new data({
             name: req.body.data.name,
             age:uploadResponse.secure_url
         })
