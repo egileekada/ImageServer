@@ -6,7 +6,7 @@ const remove = require("../Routers/delete")
 const database = require('../Database/database')   
 // const assert = require('assert');
 
-// const client = database.connect  
+// const client = database.connect   
 
 const client = database.connect
 

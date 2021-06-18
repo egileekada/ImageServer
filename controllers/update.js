@@ -1,13 +1,10 @@
 const { cloudinary } = require('../utils/cloudinary'); 
 const express = require("express"); 
-const router = express.Router();  
-const database = require('../Database/database') 
+const router = express.Router();   
+const data = require('../model/data') 
 
-
-const client = database.connect 
-
-async function upadateImageByName(client, imageName, updateName){  
-    await client.db("Photo_Storage").collection("data").updateOne(
+async function upadateImageByName(imageName, updateName){  
+    await data.updateOne(
         { name: imageName },
         { $set:updateName }
     );
@@ -36,7 +33,7 @@ router.post("/update", async (req, res)=>{
                 url : uploadResponse.secure_url
             } 
         } 
-        await upadateImageByName(client, req.body.data.name , items);
+        await upadateImageByName(req.body.data.name , items);
 
         res.json({ msg: 'yaya' }); 
     } catch (err) {

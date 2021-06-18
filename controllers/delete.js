@@ -1,13 +1,11 @@
 const express = require("express"); 
 const router = express.Router();   
-const database = require('../Database/database') 
+const data = require('../model/data')
 
-
-const client = database.connect 
 
 router.post("/delete", async (req, res)=>{ 
     try {        
-        await client.db("Photo_Storage").collection("data").deleteOne(
+        await data.deleteOne(
             { name: req.body.data.name }
         );
         console.log("A File Named "+ req.body.data.name +" has been deleted") 

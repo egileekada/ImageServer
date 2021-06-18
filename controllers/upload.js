@@ -1,24 +1,23 @@
 const { cloudinary } = require('../utils/cloudinary'); 
 const express = require("express"); 
-const router = express.Router();  
-const database = require('../Database/database') 
-
-
-const client = database.connect 
+const router = express.Router();   
+const data = require('../model/data') 
 
 async function AddImageData(client, newData){  
-    await client.db("Photo_Storage").collection("data", {
-        validator: {
-            $and: [
-                {
-                    "name" : {$type: "string", $exists: true}
-                },
-                {
-                    "url" : {$type: "string", $exists: true}
-                },
-            ]
-        }
-    }).insertOne(newData); 
+    // await client.db("Photo_Storage").collection("data", {
+    //     validator: {
+    //         $and: [
+    //             {
+    //                 "name" : {$type: "string", $exists: true}
+    //             },
+    //             {
+    //                 "url" : {$type: "string", $exists: true}
+    //             },
+    //         ]
+    //     }
+    // }).insertOne(newData); 
+
+    await data.save(newData); 
     
     await client
         .db("Photo_Storage")
@@ -41,7 +40,7 @@ router.post("/upload", async (req, res)=>{
             url : uploadResponse.secure_url
         } 
         
-        await AddImageData(client, items);  
+        await AddImageData(items);  
         res.json({ msg: 'yaya' }); 
     } catch (err) {
         console.error(err);
