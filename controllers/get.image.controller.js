@@ -1,9 +1,8 @@
 const data = require('../model/data')
 
 async function findImageByName(name, res){  
-    const regex = new RegExp(name, 'i') 
     const cursor = await data.find({
-        name: {$regex: regex}
+        "name":{"$regex": "Alex", "$options": "i"}
          // { $regex: name, $options:'i' }
         // /name/i
         
