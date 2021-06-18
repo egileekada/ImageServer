@@ -1,15 +1,4 @@
-const data = require('../model/data')
-
-async function findImageByName(name, res){  
-    const cursor = await data.find({
-        "name":{"$regex": "Alex", "$options": "i"}
-         // { $regex: name, $options:'i' }
-        // /name/i
-        
-    }); 
-
-    res.json(cursor)
-}
+const data = require('../model/data') 
 
 exports.viewall = async(req, res) => {
     try { 
@@ -41,9 +30,12 @@ exports.search = async(req, res) => {
 }
 
 exports.view_image = async(req, res) => {
-    try {  
-        let name = req.body.data
-        await findImageByName(name, res);        
+    try {   
+        const cursor = await data.find({
+            name: { $regex: req.body.data, $options:'i' }
+        }); 
+    
+        res.json(cursor)     
     } catch(error) {
         res.status(500).json(error);
     }

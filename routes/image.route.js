@@ -8,7 +8,7 @@ const controller = require('../controllers/get.image.controller');
 
 router.get('/viewall', controller.viewall); 
 router.get('/search', controller.search); 
-router.post('/view_image', controller.viewall); 
+router.post('/view_image', controller.view_image); 
 
 router.use("/image", upload, remove, update);   
 
