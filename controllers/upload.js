@@ -11,9 +11,13 @@ router.post("/upload", async (req, res)=>{
             upload_preset: 'o8imcxn2' 
         });   
  
+        // let store = new data();
+        // store.name = req.body.data.name;
+        // store.url = uploadResponse.secure_url
+
         var obj = {
             name:req.body.data.name,
-            age:uploadResponse.secure_url
+            url:uploadResponse.secure_url
         }
           
         data.create(obj, (err, item) => {
